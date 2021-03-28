@@ -1,7 +1,11 @@
 class TasksController < ApplicationController
   
   def index
+    if params[:query].present?
+    @tasks = Task.search_by_name_and_description(params[:query])
+    else
     @tasks = Task.all
+    end
   end
 
   def show
@@ -48,9 +52,10 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:name, :description, :priority)
   end
-
-
-
 end
+
+
+
+
 
 
